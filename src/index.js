@@ -74,7 +74,7 @@ const questions = [
 ];
 const scoreM = scoreModule();
 export function getQuestions(arr) {
-  arr.map((q) => {
+  arr.forEach((q) => {
     if (q.type === "boolean") {
       const questionModule = booleanQuestionModule(q);
       questionModule.renderOptions();
