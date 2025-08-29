@@ -3,6 +3,9 @@ import { multiplechoicequestionModule } from "./multipleChoice";
 import { textQuestionModule } from "./text";
 import { rangeQuestionModule } from "./range";
 import { scoreModule } from "./score";
+const scoreP=document.querySelector('#score')
+const finalBtn=document.querySelector("#submit-btn")
+
 const questions = [
   {
     type: "boolean",
@@ -76,32 +79,54 @@ const scoreM = scoreModule();
 export function getQuestions(arr) {
   arr.forEach((q) => {
     if (q.type === "boolean") {
-      const questionModule = booleanQuestionModule(q);
-      questionModule.renderOptions();
-      const isCorrect = questionModule.getUserInput();
-      scoreM.incrementScore(isCorrect); // pass the boolean
-           questionModule.getAnswer();
+           q.module = booleanQuestionModule(q);
+      q.module.renderOptions();
+     // const questionModule = booleanQuestionModule(q);
+      //questionModule.renderOptions();
+      // const isCorrect = questionModule.getUserInput();
+      // scoreM.incrementScore(isCorrect); // pass the boolean
+           q.module.getAnswer();
     }
     if (q.type === "multipleChoice") {
-      const questionModule = multiplechoicequestionModule(q);
-      questionModule.renderOptions();
-      const isCorrect = questionModule.getUserInput();
-      scoreM.incrementScore(isCorrect); // pass the boolean
-        questionModule.getAnswer();
+       q.module = multiplechoicequestionModule(q);
+      q.module.renderOptions();
+     // const questionModule = multiplechoicequestionModule(q);
+      //questionModule.renderOptions();
+      // const isCorrect = questionModule.getUserInput();
+      // scoreM.incrementScore(isCorrect); // pass the boolean
+        q.module.getAnswer();
     }
     if (q.type === "text") {
-      const questionModule = textQuestionModule(q);
-      questionModule.renderOptions();
-      const isCorrect = questionModule.getUserInput();
-      scoreM.incrementScore(isCorrect); // pass the boolean
+      q.module = textQuestionModule(q);
+      q.module.renderOptions();
+     // const questionModule = textQuestionModule(q);
+      // questionModule.renderOptions();
+      // const isCorrect = questionModule.getUserInput();
+    // scoreM.incrementScore(isCorrect); // pass the boolean
     }
     if (q.type === "range") {
-      const questionModule = rangeQuestionModule(q);
-      questionModule.renderOptions();
-      const isCorrect = questionModule.getUserInput();
-      scoreM.incrementScore(isCorrect); // pass the boolean
+       q.module = rangeQuestionModule(q);
+      q.module.renderOptions();
+      //const questionModule = rangeQuestionModule(q);
+      // questionModule.renderOptions();
+      // const isCorrect = questionModule.getUserInput();
+     // scoreM.incrementScore(isCorrect); // pass the boolean
     }
   });
 }
 getQuestions(questions);
 scoreM.showScore()
+
+
+finalBtn.addEventListener("click", function () {
+  scoreM.resetScore();
+
+  questions.forEach((q) => {
+    const isCorrect = q.module.getUserInput();
+    if (isCorrect !== null) {
+      scoreM.incrementScore(isCorrect);
+    }
+  });
+
+  scoreP.textContent = scoreM.showScore();
+});

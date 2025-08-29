@@ -6,8 +6,12 @@ export function scoreModule() {
     console.log(`score:${score}`)
   }
 
-     function showScore(){
-        console.log(`Your final score: ${score}`);
-    }
-    return { incrementScore, showScore };
+  function resetScore() {
+    score = 0;
+  }
+     function showScore() {
+    return `Your final score: ${score}`;
+  }
+
+    return { incrementScore, showScore,resetScore };
 }
